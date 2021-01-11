@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 class RecipeDetail extends Component {
-  constructor(props) {
-    super(props);
-  }
+
 
   deleteRecipe() {
     this.props._deleteRecipe(this.props.id);
@@ -30,14 +28,14 @@ class RecipeDetail extends Component {
           </ul>
           <div className="form-group" style={{ marginTop: 10 }}>
             <div className="col-sm-10">
-              <button
+              <Button
                 type="submit"
                 onClick={this.deleteRecipe.bind(this)}
-                className="btn btn-danger delete-btn">Delete</button>
-              <button
+                className="btn btn-danger delete-btn">Delete</Button>
+              <Button
                 type="submit"
                 onClick={this.editRecipe.bind(this)}
-                className="btn btn-primary">Edit</button>
+                className="btn btn-primary">Edit</Button>
             </div>
           </div>
         </Card.Body>

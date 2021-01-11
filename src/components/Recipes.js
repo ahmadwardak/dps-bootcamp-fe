@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
-import { Card } from 'react-bootstrap';
 import RecipeDetail from './RecipeDetail';
+import AddRecipe from './AddRecipe';
 
 let recipeArray = [];
 let recipe1 = {
@@ -32,12 +32,19 @@ export default class Recipe extends Component {
         };
     }
 
-    addRecipe() {
-
+    addRecipe(recipe) {
+        console.log(recipe)
+        let allRecipes = this.state.recipes.concat([recipe]);
+        this.setState({
+            recipes: allRecipes
+        });
+        localStorage.setItem('recipes', JSON.stringify(recipe));
+        this.toggleModel();
     }
 
     toggleModel() {
-        this.setState({ modalOpen: !state });
+        this.setState({ modalOpen: !this.state.modalOpen });
+        console.log(this.state.modalOpen);
     }
 
     deleteRecipe(id) {
@@ -63,7 +70,7 @@ export default class Recipe extends Component {
             });
         }
         return (
-            <fragment>
+            <Fragment>
                 <div className="form-group" style={{ marginTop: 10 }}>
                     <div className="col-sm-10">
                         <button
@@ -73,8 +80,11 @@ export default class Recipe extends Component {
                     </div>
                 </div>
                 {recipeNames}
-
-            </fragment>
+                <AddRecipe
+                    show={this.state.modalOpen}
+                    onClose={this.toggleModel.bind(this)}
+                    _handleAddRecipe={this.addRecipe.bind(this)} />
+            </Fragment>
         )
     }
 };
