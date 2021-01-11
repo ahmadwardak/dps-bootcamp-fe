@@ -1,0 +1,24 @@
+html {
+  min-height: 100%;
+}
+body {
+  height: 100%;
+}
+
+h1 {
+  color: #aaa;
+}
+
+.container,
+.sub-container {
+  height: 100%;
+  padding-bottom: 50px;
+}
+
+.modal-wrapper {
+  position: absolute;
+}
+
+.delete-btn {
+  margin-right: 10px;
+}
