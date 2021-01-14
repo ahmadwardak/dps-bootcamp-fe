@@ -4,6 +4,7 @@ class RecipeDetail extends Component {
 
 
   deleteRecipe() {
+    console.log(this.props.id)
     this.props._deleteRecipe(this.props.id);
   }
 

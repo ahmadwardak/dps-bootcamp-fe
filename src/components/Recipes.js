@@ -39,8 +39,10 @@ export default class Recipes extends Component {
 
         RecipeService.getRecipes().then((data) => {
             console.log('aaa');
+            console.log(data)
             this.setState({
                 recipes: [...data]
+
             })
         }).catch((e) => {
             console.error(e)
@@ -69,8 +71,10 @@ export default class Recipes extends Component {
 
     deleteRecipe(id) {
         //TODO: Add confirmation
-        this.setState({
-            recipes: this.state.recipes.filter((d, i) => i !== id)
+        RecipeService.deleteRecipe(id).then((data) => {
+
+        }).catch(err => {
+            console.error(err);
         });
 
     }
@@ -87,9 +91,16 @@ export default class Recipes extends Component {
     }
 
     editRecipeComplete(index, recipe) {
-        let recipes = this.state.recipes;
-        recipes[index] = recipe;
-        this.setState({ recipes: recipes });
+        console.log("aa2a")
+        RecipeService.updateRecipe(index, recipe).then((data) => {
+
+        }).catch(err => {
+            console.error(err);
+        });
+
+
+        // recipes[index] = recipe;
+        // this.setState({ recipes: recipes });
         this.setState({
             editingIndex: '',
             editingData: ''
@@ -106,7 +117,7 @@ export default class Recipes extends Component {
                 return <RecipeDetail
                     item={data}
                     key={index}
-                    id={index}
+                    id={data._id}
                     _deleteRecipe={this.deleteRecipe.bind(this)}
                     _editRecipe={this.editRecipe.bind(this)} />;
             });

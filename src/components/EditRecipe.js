@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import RecipeService from "../services/RecipeService";
 class EditRecipe extends Component {
     constructor(props) {
         super(props);
@@ -18,16 +19,33 @@ class EditRecipe extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            title: this.props.data.title,
-            description: this.props.data.description,
-            timeNeeded: this.props.data.timeNeeded,
-            ingredients: this.props.data.ingredients.join(',')
+        let id = this.props.index;
+
+        RecipeService.getRecipe(id).then((data) => {
+            console.log('aaa');
+            console.log(data)
+            this.setState({
+                title: data.title,
+                description: data.description,
+                timeNeeded: data.timeNeeded,
+                ingredients: data.ingredients
+
+            })
+        }).catch((e) => {
+            console.error(e)
         });
+
+        // this.setState({
+        //     title: this.props.data.title,
+        //     description: this.props.data.description,
+        //     timeNeeded: this.props.data.timeNeeded,
+        //     ingredients: this.props.data.ingredients.join(',')
+        // });
     }
 
     handleEditRecipe(e) {
         e.preventDefault();
+        console.log(this.state.ingredients)
         let ingredients = this.state.ingredients.trim();
         let ingredientsArray = ingredients.split(',');
         ingredientsArray.map(function (a) {
@@ -148,7 +166,7 @@ class EditRecipe extends Component {
                             </div>
                             <div className="col-sm-10">
                                 <input
-                                    ref="ingredients"
+                                    ref="suggestIngredient"
                                     style={{ marginTop: 10 }}
                                     type="textarea"
                                     className="form-control"

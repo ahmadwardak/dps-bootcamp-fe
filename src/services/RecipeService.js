@@ -41,6 +41,7 @@ export default class RecipeService {
     }
 
     static createRecipe(recipe) {
+        console.log(recipe);
         return new Promise((resolve, reject) => {
 
             axios({
@@ -65,12 +66,13 @@ export default class RecipeService {
         });
     }
 
-    static updateRecipe(recipe) {
+    static updateRecipe(id, recipe) {
+
         return new Promise((resolve, reject) => {
 
             axios({
                 method: 'put',
-                url: this.baseURL() + recipe.id,
+                url: this.baseURL() + "/" + id,
                 data: {
                     title: recipe.title,
                     description: recipe.description,
@@ -93,13 +95,15 @@ export default class RecipeService {
     static deleteRecipe(id) {
 
         return new Promise((resolve, reject) => {
-            axios.delete(`${RecipeService.baseURL()} / ${id}`, {
+            axios.delete(`${RecipeService.baseURL()}/${id}`, {
                 headers: {
 
                 }
             })
                 .then(res => {
-                    resolve('success');
+
+                    window.location = "/";
+                    window.location.reload(false);
                 })
                 .catch(err => {
                     console.log(err);

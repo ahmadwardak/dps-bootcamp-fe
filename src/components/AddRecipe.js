@@ -91,7 +91,7 @@ class AddRecipe extends Component {
                                     ref="ingredients"
                                     type="textarea"
                                     className="form-control"
-                                    id="Ingredients"
+                                    id="ingredients"
                                     placeholder="Ingredients. Separate them by comma." />
                             </div>
                         </div>
@@ -104,7 +104,7 @@ class AddRecipe extends Component {
                             </div>
                             <div className="col-sm-10">
                                 <input
-                                    ref="ingredients"
+                                    ref="suggestIngredient"
                                     style={{ marginTop: 10 }}
                                     type="textarea"
                                     className="form-control"
