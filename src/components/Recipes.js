@@ -1,58 +1,100 @@
 import React, { Component, Fragment } from 'react';
 
+import RecipeService from "../services/RecipeService";
+
 import RecipeDetail from './RecipeDetail';
 import AddRecipe from './AddRecipe';
+import EditRecipe from './EditRecipe';
 
-let recipeArray = [];
-let recipe1 = {
-    title: 'Recipe1',
-    timeNeeded: '50',
-    description: 'Description about the recipe',
-    ingredients: ['Onions', 'Eggs', 'Oil']
-};
+// let recipeArray = [];
+// let recipe1 = {
+//     title: 'Recipe1',
+//     timeNeeded: '50',
+//     description: 'Description about the recipe',
+//     ingredients: ['Onions', 'Eggs', 'Oil']
+// };
 
-let recipe2 = {
-    title: 'Recipe2',
-    timeNeeded: '60',
-    description: 'Description2 about the recipe',
-    ingredients: ['Rice', 'Meat', 'Potato']
-};
+// let recipe2 = {
+//     title: 'Recipe2',
+//     timeNeeded: '60',
+//     description: 'Description2 about the recipe',
+//     ingredients: ['Rice', 'Meat', 'Potato']
+// };
 
-recipeArray.push(recipe1);
-recipeArray.push(recipe2);
+// recipeArray.push(recipe1);
+// recipeArray.push(recipe2);
 
-export default class Recipe extends Component {
+export default class Recipes extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            recipes: recipeArray,
+            recipes: [],
             modalOpen: false,
             editModalOpen: false,
+            editingData: '',
+            editingIndex: ''
         };
+
+
+        RecipeService.getRecipes().then((data) => {
+            console.log('aaa');
+            this.setState({
+                recipes: [...data]
+            })
+        }).catch((e) => {
+            console.error(e)
+        });
+
     }
 
     addRecipe(recipe) {
         console.log(recipe)
-        let allRecipes = this.state.recipes.concat([recipe]);
-        this.setState({
-            recipes: allRecipes
+
+        RecipeService.createRecipe(recipe).then((data) => {
+
+        }).catch(err => {
+            console.error(err);
         });
-        localStorage.setItem('recipes', JSON.stringify(recipe));
+
         this.toggleModel();
     }
 
     toggleModel() {
         this.setState({ modalOpen: !this.state.modalOpen });
-        console.log(this.state.modalOpen);
+    }
+    toggleEditModel() {
+        this.setState({ editModalOpen: !this.state.editModalOpen });
     }
 
     deleteRecipe(id) {
+        //TODO: Add confirmation
+        this.setState({
+            recipes: this.state.recipes.filter((d, i) => i !== id)
+        });
 
     }
 
-    editRecipe(id) {
 
+    editRecipe(index) {
+        let editingData = this.state.recipes[index];
+
+        this.setState({
+            editingIndex: index,
+            editingData: editingData
+        });
+        this.toggleEditModel();
+    }
+
+    editRecipeComplete(index, recipe) {
+        let recipes = this.state.recipes;
+        recipes[index] = recipe;
+        this.setState({ recipes: recipes });
+        this.setState({
+            editingIndex: '',
+            editingData: ''
+        });
+        this.toggleEditModel();
     }
 
     render() {
@@ -69,6 +111,19 @@ export default class Recipe extends Component {
                     _editRecipe={this.editRecipe.bind(this)} />;
             });
         }
+
+
+        let editForm = '';
+        if (this.state.editingData !== '') {
+            editForm = <EditRecipe
+                show={this.state.editModalOpen}
+                onClose={this.toggleEditModel.bind(this)}
+                data={this.state.editingData}
+                index={this.state.editingIndex}
+                _handleEditRecipe={this.editRecipeComplete.bind(this)} >
+            </EditRecipe>;
+        }
+
         return (
             <Fragment>
                 <div className="form-group" style={{ marginTop: 10 }}>
@@ -80,6 +135,9 @@ export default class Recipe extends Component {
                     </div>
                 </div>
                 {recipeNames}
+
+                {editForm}
+
                 <AddRecipe
                     show={this.state.modalOpen}
                     onClose={this.toggleModel.bind(this)}

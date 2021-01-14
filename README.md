@@ -1,26 +1,39 @@
-# Getting Started with Create React App
+# EZ Recipes created with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Install required dependencies
 
-In the project directory, you can run:
+### `npm install`
+
+Run this command to install the dependencies in both frontend "dps-bootstrap-fe" and backend "BOOTCAMP-BACKEND" directories. 
+
+## Frontend Scripts
+
+In the frontend of project directory "dps-bootstrap-fe", you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the react frontend.\
+Open [http://localhost:3006](http://localhost:3006) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 
-### `npm run build`
+## Backend Scripts
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In the backend of project directory "BOOTCAMP-BACKEND", you can run:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm runScript startdb`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Start the mongodb in express-mongo-app folder
+
+### `npm start`
+
+Runs the Node Express server .\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
