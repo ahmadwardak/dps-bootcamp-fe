@@ -8,7 +8,8 @@ class EditRecipe extends Component {
             title: '',
             description: '',
             timeNeeded: '',
-            ingredients: ''
+            ingredients: '',
+            suggestion: ''
         };
 
         this.changeTitle = this.changeTitle.bind(this);
@@ -83,9 +84,26 @@ class EditRecipe extends Component {
         this.setState({ timeNeeded: e.target.value });
     }
 
+
+
     handleSuggestion(e) {
         e.preventDefault();
         console.log("suggestion")
+
+        let id = this.props.index;
+
+        RecipeService.getSuggestion(this.state.ingredients).then((data) => {
+            console.log('aaa');
+            console.log(data);
+            this.setState({ suggestion: data })
+
+        }).catch((e) => {
+            console.error(e)
+        });
+
+
+
+
     }
 
     render() {
@@ -171,6 +189,7 @@ class EditRecipe extends Component {
                                     type="textarea"
                                     className="form-control"
                                     id="SuggestedIngredient"
+                                    defaultValue={this.state.suggestion}
                                     placeholder="Suggestion from AI Model" />
                             </div>
                         </div>

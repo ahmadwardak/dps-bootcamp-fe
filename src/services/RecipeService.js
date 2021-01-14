@@ -112,4 +112,35 @@ export default class RecipeService {
     }
 
 
+    static getSuggestion(ingredients) {
+        let data = {};
+        for (let index = 0; index <= ingredients.length - 1; index++) {
+            let i = parseInt(index) + 1;
+            data["Ingredient_" + i] = ingredients[index];
+        }
+        console.log(data)
+        data = JSON.stringify(data);
+        console.log(data)
+
+        return new Promise((resolve, reject) => {
+
+            axios({
+                method: 'post',
+                url: 'https://bootcamp-301515.ew.r.appspot.com/predict',
+                withCredentials: false,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                },
+                data: data
+            })
+                .then((response) => {
+                    console.log(response);
+                }, (error) => {
+                    console.log(error);
+                });
+        });
+    }
+
+
 }

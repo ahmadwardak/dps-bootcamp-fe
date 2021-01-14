@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import RecipeService from "../services/RecipeService";
 class AddRecipe extends Component {
     handleAddRecipe(e) {
         e.preventDefault();
@@ -25,6 +26,7 @@ class AddRecipe extends Component {
         this.refs.description.value = "";
         this.refs.timeNeeded.value = "";
         this.refs.ingredients.value = "";
+        this.refs.suggestIngredient.value = "";
         this.props.onClose.bind(this);
     }
 
@@ -32,6 +34,16 @@ class AddRecipe extends Component {
     handleSuggestion(e) {
         e.preventDefault();
         console.log("suggestion")
+
+        let id = this.props.index;
+
+        RecipeService.getSuggestion(this.state.ingredients).then((data) => {
+
+        }).catch((e) => {
+            console.error(e)
+        });
+
+
     }
 
     render() {
